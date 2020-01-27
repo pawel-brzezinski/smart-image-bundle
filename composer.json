@@ -1,0 +1,28 @@
+{
+    "name": "pawel-brzezinski/serializard-bundle",
+    "description": "Symfony bundle that give an easy possibility to use responsive image services.",
+    "type": "symofny-bundle",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Paweł Brzeziński",
+            "email": "pawel.brzezinski@smartint.pl"
+        }
+    ],
+    "minimum-stability": "stable",
+    "autoload": {
+        "psr-4": {
+            "PB\\Bundle\\SmartImageBundle\\": ""
+        },
+        "exclude-from-classmap": [
+            "/Tests/"
+        ]
+    },
+    "require": {
+        "php": "^7.1",
+        "symfony/http-kernel": "^5.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^7.5"
+    }
+}
