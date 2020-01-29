@@ -1,0 +1,3 @@
+{% set attributes = ['class', 'src', 'srcset', 'alt', 'sizes'] %}
+
+<img {{ si_attrs_string(_context, attributes)|raw }}>

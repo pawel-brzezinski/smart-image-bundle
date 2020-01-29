@@ -1,0 +1,14 @@
+{% set source = source is defined and source is iterable ? source : null %}
+{% set img = img is defined and img is iterable ? img : null %}
+
+<picture>
+    {% if source is not null %}
+        {% for attrs in source %}
+            {% include '@PBSmartImage/tag/source.html.twig' with attrs only %}
+        {% endfor %}
+    {% endif %}
+
+    {% if img is not null %}
+        {% include '@PBSmartImage/tag/img.html.twig' with img only %}
+    {% endif %}
+</picture>
