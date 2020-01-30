@@ -31,7 +31,8 @@ class PBSmartImageExtensionTest extends AbstractExtensionTestCase
             'cloudimage_2' => [
                 'type' => 'cloudimage',
                 'url' => 'https://example2.cloudimage.io',
-                'version' => 'v6'
+                'version' => 'v6',
+                'alias' => '_storage_',
             ],
         ],
     ];
@@ -75,11 +76,12 @@ class PBSmartImageExtensionTest extends AbstractExtensionTestCase
         // Service for 'cloudimage_2' adapter
         $this->assertContainerBuilderHasServiceDefinitionWithArgument('pb_smart_image.adapter.cloudimage_2', 0, 'https://example2.cloudimage.io');
         $this->assertContainerBuilderHasServiceDefinitionWithArgument('pb_smart_image.adapter.cloudimage_2', 1, 'v6');
+        $this->assertContainerBuilderHasServiceDefinitionWithArgument('pb_smart_image.adapter.cloudimage_2', 2, '_storage_');
 
         // Adapter registry
         $adapterRefs = [
-            new Reference('pb_smart_image.adapter.cloudimage_1'),
-            new Reference('pb_smart_image.adapter.cloudimage_2'),
+            'cloudimage_1' => new Reference('pb_smart_image.adapter.cloudimage_1'),
+            'cloudimage_2' => new Reference('pb_smart_image.adapter.cloudimage_2'),
         ];
 
         $this->assertContainerBuilderHasServiceDefinitionWithArgument(AdapterRegistry::class, 0, $adapterRefs);

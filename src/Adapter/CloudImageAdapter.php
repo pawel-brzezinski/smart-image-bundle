@@ -22,15 +22,22 @@ final class CloudImageAdapter implements AdapterInterface
     private $apiVersion;
 
     /**
+     * @var string|null
+     */
+    private $alias;
+
+    /**
      * CloudImageAdapter constructor.
      *
      * @param string $apiUrl
      * @param string $apiVersion
+     * @param string|null $alias
      */
-    public function __construct(string $apiUrl, string $apiVersion)
+    public function __construct(string $apiUrl, string $apiVersion, string $alias = null)
     {
         $this->apiUrl = $apiUrl;
         $this->apiVersion = $apiVersion;
+        $this->alias = $alias;
     }
 
     /**
@@ -76,6 +83,12 @@ final class CloudImageAdapter implements AdapterInterface
      */
     private function buildServiceUrl(): string
     {
-        return trim($this->apiUrl, '/').'/'.$this->apiVersion;
+        $url = trim($this->apiUrl, '/').'/'.$this->apiVersion;
+
+        if (null !== $this->alias) {
+            $url .= '/'.trim($this->alias, '/');
+        }
+
+        return $url;
     }
 }

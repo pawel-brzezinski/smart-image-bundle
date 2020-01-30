@@ -30,6 +30,10 @@ final class CloudImageAdapterConfigurator implements AdapterConfiguratorInterfac
                 ->defaultValue('v7')
                 ->info('CloudImage.io api version')
             ->end()
+            ->scalarNode('alias')
+                ->cannotBeEmpty()
+                ->info('CloudImage.io storage alias (the storage url can be used as well)')
+            ->end()
         ;
     }
 
@@ -46,6 +50,12 @@ final class CloudImageAdapterConfigurator implements AdapterConfiguratorInterfac
      */
     public function buildAdapterArgsFromConfig(array $config): array
     {
-        return [$config['url'], $config['version']];
+        $args = [$config['url'], $config['version']];
+
+        if (isset($config['alias'])) {
+            $args[] = $config['alias'];
+        }
+
+        return $args;
     }
 }

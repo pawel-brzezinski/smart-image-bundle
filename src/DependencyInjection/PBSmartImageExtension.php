@@ -140,7 +140,7 @@ final class PBSmartImageExtension extends Extension
         $serviceKey = sprintf(self::ADAPTER_SERVICE_KEY_PATTERN, $key);
         $container->setDefinition($serviceKey, $adapterDef);
 
-        $this->adapterServiceKeys[] = $serviceKey;
+        $this->adapterServiceKeys[$key] = $serviceKey;
     }
 
     /**
@@ -153,8 +153,8 @@ final class PBSmartImageExtension extends Extension
     {
         $adapterRefs = [];
 
-        foreach ($this->adapterServiceKeys as $adapterServiceKey) {
-            $adapterRefs[] = new Reference($adapterServiceKey);
+        foreach ($this->adapterServiceKeys as $adapterKey => $adapterServiceKey) {
+            $adapterRefs[$adapterKey] = new Reference($adapterServiceKey);
         }
 
         $registryDef = $container->findDefinition(AdapterRegistryInterface::class);

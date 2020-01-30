@@ -55,9 +55,23 @@ class CloudImageAdapterConfiguratorTest extends TestCase
             'version' => 'v6',
         ];
 
+        // Dataset 3
+        $config3 = [
+            'url' => 'http://token3.cloudimage.io',
+            'version' => 'v7',
+            'alias' => '_storage_',
+        ];
+        $breadcrumb3 = null;
+        $expected3 = [
+            'url' => 'http://token3.cloudimage.io',
+            'version' => 'v7',
+            'alias' => '_storage_',
+        ];
+
         return [
             'default config' => [$expected1, $config1, $breadcrumb1],
-            'custom config' => [$expected2, $config2, $breadcrumb2],
+            'custom config with required only nodes' => [$expected2, $config2, $breadcrumb2],
+            'custom config with all optional nodes' => [$expected3, $config3, $breadcrumb3],
         ];
     }
 
@@ -96,10 +110,19 @@ class CloudImageAdapterConfiguratorTest extends TestCase
         ];
         $expectedMsg3 = 'version';
 
+        // Dataset 4
+        $config4 = [
+            'url' => 'http://token.cloudimage.io',
+            'version' => 'v7',
+            'alias' => '',
+        ];
+        $expectedMsg4 = 'alias';
+
         return [
             'url node not defined' => [$expectedMsg1, $config1],
             'url node is empty' => [$expectedMsg2, $config2],
             'version node is empty' => [$expectedMsg3, $config3],
+            'alias node is empty' => [$expectedMsg4, $config4],
         ];
     }
 
@@ -149,17 +172,39 @@ class CloudImageAdapterConfiguratorTest extends TestCase
     ###############################################################
 
     /**
-     *
+     * @return array
      */
-    public function testShouldCallBuildAdapterArgsFromConfigAndReturnArrayOfArgumentsForAdapter()
+    public function buildAdapterArgsFromConfigDataProvider(): array
     {
-        // Given
-        $config = [
+        // Dataset 1
+        $config1 = [
             'url' => 'https://example.cloudimage.io',
             'version' => 'v7',
         ];
-        $expected = ['https://example.cloudimage.io', 'v7'];
+        $expected1 = ['https://example.cloudimage.io', 'v7'];
 
+        // Dataset 2
+        $config2 = [
+            'url' => 'https://example.cloudimage.io',
+            'version' => 'v7',
+            'alias' => '_storage_',
+        ];
+        $expected2 = ['https://example.cloudimage.io', 'v7', '_storage_'];
+
+        return [
+            'config with required only items' => [$expected1, $config1],
+            'config with all optional items' => [$expected2, $config2],
+        ];
+    }
+
+    /**
+     * @dataProvider buildAdapterArgsFromConfigDataProvider
+     *
+     * @param array $expected
+     * @param array $config
+     */
+    public function testShouldCallBuildAdapterArgsFromConfigAndReturnArrayOfArgumentsForAdapter(array $expected, array $config)
+    {
         // When
         $actual = $this->createConfigurator()->buildAdapterArgsFromConfig($config);
 

@@ -13,6 +13,7 @@
 
 # Tests
 /.php_cs.cache
+/.phpunit.result.cache
 /infection.json
 /phpunit.xml
 /tests/coverage

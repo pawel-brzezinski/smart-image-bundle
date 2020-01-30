@@ -27,7 +27,7 @@
         </service>
 
         <service id="PB\Bundle\SmartImageBundle\Twig\ImageRuntime" public="false">
-            <argument key="$adapterRegistry"/>
+            <argument key="$adapterRegistry" type="service" id="PB\Bundle\SmartImageBundle\Adapter\AdapterRegistry"/>
             <tag name="twig.runtime"/>
         </service>
     </services>
