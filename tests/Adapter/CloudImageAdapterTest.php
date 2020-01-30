@@ -13,8 +13,8 @@ use PHPUnit\Framework\TestCase;
  */
 class CloudImageAdapterTest extends TestCase
 {
-    private const DEFAULT_API_URL = 'https://example.cloudimg.io';
-    private const DEFAULT_API_VERSION = 'v7';
+    private const DEFAULT_TOKEN = 'example';
+    private const DEFAULT_VERSION = 'v7';
 
     ####################################
     # CloudImageAdapter::__construct() #
@@ -26,35 +26,35 @@ class CloudImageAdapterTest extends TestCase
     public function createAdapterDataProvider(): array
     {
         // Dataset 1
-        $apiUrl1 = 'https://example-1.cloudimg.io';
-        $apiVersion1 = 'v7';
-        $args1 = [$apiUrl1, $apiVersion1];
+        $token1 = 'example-1';
+        $version1 = 'v7';
+        $args1 = [$token1, $version1];
 
         // Dataset 2
-        $apiUrl2 = 'https://example-2.cloudimg.io';
-        $apiVersion2 = 'v6';
+        $token2 = 'example-2';
+        $version2 = 'v6';
         $alias2 = '_storage_';
-        $args2 = [$apiUrl2, $apiVersion2, $alias2];
+        $args2 = [$token2, $version2, $alias2];
 
         return [
-            'default adapter args' => [$apiUrl1, $apiVersion1, null, $args1],
-            'custom alias' => [$apiUrl2, $apiVersion2, $alias2, $args2],
+            'default adapter args' => [$token1, $version1, null, $args1],
+            'custom alias' => [$token2, $version2, $alias2, $args2],
         ];
     }
 
     /**
      * @dataProvider createAdapterDataProvider
      *
-     * @param string $expectedApiUrl
-     * @param string $expectedApiVersion
+     * @param string $expectedToken
+     * @param string $expectedVersion
      * @param string|null $expectedAlias
      * @param array $args
      *
      * @throws \ReflectionException
      */
     public function testShouldCreateAdapterObjectAndCheckIfPropertiesHasBeenSetCorrect(
-        string $expectedApiUrl,
-        string $expectedApiVersion,
+        string $expectedToken,
+        string $expectedVersion,
         ?string $expectedAlias,
         array $args
     ) {
@@ -62,8 +62,8 @@ class CloudImageAdapterTest extends TestCase
         $objectUnderTest = new CloudImageAdapter(...$args);
 
         // Then
-        $this->assertSame($expectedApiUrl, Reflection::getPropertyValue($objectUnderTest, 'apiUrl'));
-        $this->assertSame($expectedApiVersion, Reflection::getPropertyValue($objectUnderTest, 'apiVersion'));
+        $this->assertSame($expectedToken, Reflection::getPropertyValue($objectUnderTest, 'token'));
+        $this->assertSame($expectedVersion, Reflection::getPropertyValue($objectUnderTest, 'version'));
         $this->assertSame($expectedAlias, Reflection::getPropertyValue($objectUnderTest, 'alias'));
     }
 
@@ -81,12 +81,12 @@ class CloudImageAdapterTest extends TestCase
     public function getUrlDataProvider(): array
     {
         return [
-            ['https://example.cloudimg.io/v7/path/to/image-1.jpg', 'https://example.cloudimg.io', null, 'path/to/image-1.jpg'],
-            ['https://example.cloudimg.io/v7/_storage2_/path/to/image-2.jpg', 'https://example.cloudimg.io/', '_storage2_', '/path/to/image-2.jpg'],
-            ['https://example.cloudimg.io/v7/_storage3_/path/to/image-3.jpg', 'https://example.cloudimg.io', '_storage3_/', 'path/to/image-3.jpg/'],
-            ['https://example.cloudimg.io/v7/_storage4_/path/to/image-4.jpg', 'https://example.cloudimg.io/', '/_storage4_', '/path/to/image-4.jpg/'],
-            ['https://example.cloudimg.io/v7/_storage5_/path/to/image-5.jpg', 'https://example.cloudimg.io', '/_storage5_/', 'path/to/image-5.jpg'],
-            ['https://example.cloudimg.io/v7/https://storage.example.com/path/to/image-5.jpg', 'https://example.cloudimg.io', 'https://storage.example.com', 'path/to/image-5.jpg'],
+            ['https://example-1.cloudimg.io/v7/path/to/image-1.jpg', 'example-1', 'v7', null, 'path/to/image-1.jpg'],
+            ['https://example-2.cloudimg.io/v7/_storage2_/path/to/image-2.jpg', 'example-2', 'v7', '_storage2_', '/path/to/image-2.jpg'],
+            ['https://example-3.cloudimg.io/v7/_storage3_/path/to/image-3.jpg', 'example-3', 'v7', '_storage3_/', 'path/to/image-3.jpg/'],
+            ['https://example-4.cloudimg.io/v7/_storage4_/path/to/image-4.jpg', 'example-4', 'v7', '/_storage4_', '/path/to/image-4.jpg/'],
+            ['https://example-5.cloudimg.io/v6/_storage5_/path/to/image-5.jpg', 'example-5', 'v6', '/_storage5_/', 'path/to/image-5.jpg'],
+            ['https://example-6.cloudimg.io/v6/https://storage.example.com/path/to/image-5.jpg', 'example-6', 'v6', 'https://storage.example.com', 'path/to/image-5.jpg'],
         ];
     }
 
@@ -94,14 +94,15 @@ class CloudImageAdapterTest extends TestCase
      * @dataProvider getUrlDataProvider
      *
      * @param string $expected
-     * @param string $apiUrl
+     * @param string $token
+     * @param string $version
      * @param string $alias
      * @param string $source
      */
-    public function testShouldCallGetUrlAndReturnServiceImageUrl(string $expected, string $apiUrl, ?string $alias, string $source)
+    public function testShouldCallGetUrlAndReturnServiceImageUrl(string $expected, string $token, string $version, ?string $alias, string $source)
     {
         // When
-        $actual = $this->createAdapter($apiUrl, self::DEFAULT_API_VERSION, $alias)->getUrl($source);
+        $actual = $this->createAdapter($token, $version, $alias)->getUrl($source);
 
         // Then
         $this->assertSame($expected, $actual);
@@ -156,20 +157,20 @@ class CloudImageAdapterTest extends TestCase
     public function getUrlWithTransformationDataProvider(): array
     {
         // Dataset 1
-        $apiUrl1 = 'https://example.cloudimg.io';
+        $token1 = 'example-1';
         $source1 = 'path/to/image-1.jpg';
         $trans1 = [];
-        $expected1 = 'https://example.cloudimg.io/v7/path/to/image-1.jpg';
+        $expected1 = 'https://example-1.cloudimg.io/v7/path/to/image-1.jpg';
 
         // Dataset 2
-        $apiUrl2 = 'https://example.cloudimg.io/';
+        $token2 = 'example-2';
         $source2 = '/path/to/image-2.jpg';
         $trans2 = ['width' => 800, 'height' => '600', 'q' => 5];
-        $expected2 = 'https://example.cloudimg.io/v7/path/to/image-2.jpg?width=800&height=600&q=5';
+        $expected2 = 'https://example-2.cloudimg.io/v7/path/to/image-2.jpg?width=800&height=600&q=5';
 
         return [
-            [$expected1, $apiUrl1, $source1, $trans1],
-            [$expected2, $apiUrl2, $source2, $trans2],
+            [$expected1, $token1, $source1, $trans1],
+            [$expected2, $token2, $source2, $trans2],
         ];
     }
 
@@ -199,17 +200,17 @@ class CloudImageAdapterTest extends TestCase
     #######
 
     /**
-     * @param string $apiUrl
-     * @param string $apiVersion
+     * @param string $token
+     * @param string $version
      * @param string|null $alias
      *
      * @return CloudImageAdapter
      */
     private function createAdapter(
-        string $apiUrl = self::DEFAULT_API_URL,
-        string $apiVersion = self::DEFAULT_API_VERSION,
+        string $token = self::DEFAULT_TOKEN,
+        string $version = self::DEFAULT_VERSION,
         string $alias = null
     ): CloudImageAdapter {
-        return new CloudImageAdapter($apiUrl, $apiVersion, $alias);
+        return new CloudImageAdapter($token, $version, $alias);
     }
 }

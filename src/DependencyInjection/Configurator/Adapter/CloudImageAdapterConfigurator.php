@@ -20,10 +20,10 @@ final class CloudImageAdapterConfigurator implements AdapterConfiguratorInterfac
     public function buildConfiguration(NodeBuilder $node): void
     {
         $node
-            ->scalarNode('url')
+            ->scalarNode('token')
                 ->isRequired()
                 ->cannotBeEmpty()
-                ->info('CloudImage.io api url')
+                ->info('CloudImage.io token')
             ->end()
             ->scalarNode('version')
                 ->cannotBeEmpty()
@@ -50,7 +50,7 @@ final class CloudImageAdapterConfigurator implements AdapterConfiguratorInterfac
      */
     public function buildAdapterArgsFromConfig(array $config): array
     {
-        $args = [$config['url'], $config['version']];
+        $args = [$config['token'], $config['version']];
 
         if (isset($config['alias'])) {
             $args[] = $config['alias'];

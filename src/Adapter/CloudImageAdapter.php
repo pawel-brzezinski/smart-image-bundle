@@ -11,15 +11,17 @@ namespace PB\Bundle\SmartImageBundle\Adapter;
  */
 final class CloudImageAdapter implements AdapterInterface
 {
-    /**
-     * @var string
-     */
-    private $apiUrl;
+    const URL_PATTERN = 'https://%s.cloudimg.io';
 
     /**
      * @var string
      */
-    private $apiVersion;
+    private $token;
+
+    /**
+     * @var string
+     */
+    private $version;
 
     /**
      * @var string|null
@@ -29,14 +31,14 @@ final class CloudImageAdapter implements AdapterInterface
     /**
      * CloudImageAdapter constructor.
      *
-     * @param string $apiUrl
-     * @param string $apiVersion
+     * @param string $token
+     * @param string $version
      * @param string|null $alias
      */
-    public function __construct(string $apiUrl, string $apiVersion, string $alias = null)
+    public function __construct(string $token, string $version, string $alias = null)
     {
-        $this->apiUrl = $apiUrl;
-        $this->apiVersion = $apiVersion;
+        $this->token = $token;
+        $this->version = $version;
         $this->alias = $alias;
     }
 
@@ -83,7 +85,7 @@ final class CloudImageAdapter implements AdapterInterface
      */
     private function buildServiceUrl(): string
     {
-        $url = trim($this->apiUrl, '/').'/'.$this->apiVersion;
+        $url = sprintf(self::URL_PATTERN, $this->token).'/'.$this->version;
 
         if (null !== $this->alias) {
             $url .= '/'.trim($this->alias, '/');

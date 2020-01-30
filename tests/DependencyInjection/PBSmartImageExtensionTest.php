@@ -25,12 +25,12 @@ class PBSmartImageExtensionTest extends AbstractExtensionTestCase
         'adapters' => [
             'cloudimage_1' => [
                 'type' => 'cloudimage',
-                'url' => 'https://example1.cloudimage.io',
+                'token' => 'token-1',
                 'version' => 'v7'
             ],
             'cloudimage_2' => [
                 'type' => 'cloudimage',
-                'url' => 'https://example2.cloudimage.io',
+                'token' => 'token-2',
                 'version' => 'v6',
                 'alias' => '_storage_',
             ],
@@ -70,11 +70,11 @@ class PBSmartImageExtensionTest extends AbstractExtensionTestCase
         $this->assertContainerBuilderHasServiceDefinitionWithTag(ImageRuntime::class, 'twig.runtime');
 
         // Service for 'cloudimage_1' adapter
-        $this->assertContainerBuilderHasServiceDefinitionWithArgument('pb_smart_image.adapter.cloudimage_1', 0, 'https://example1.cloudimage.io');
+        $this->assertContainerBuilderHasServiceDefinitionWithArgument('pb_smart_image.adapter.cloudimage_1', 0, 'token-1');
         $this->assertContainerBuilderHasServiceDefinitionWithArgument('pb_smart_image.adapter.cloudimage_1', 1, 'v7');
 
         // Service for 'cloudimage_2' adapter
-        $this->assertContainerBuilderHasServiceDefinitionWithArgument('pb_smart_image.adapter.cloudimage_2', 0, 'https://example2.cloudimage.io');
+        $this->assertContainerBuilderHasServiceDefinitionWithArgument('pb_smart_image.adapter.cloudimage_2', 0, 'token-2');
         $this->assertContainerBuilderHasServiceDefinitionWithArgument('pb_smart_image.adapter.cloudimage_2', 1, 'v6');
         $this->assertContainerBuilderHasServiceDefinitionWithArgument('pb_smart_image.adapter.cloudimage_2', 2, '_storage_');
 
@@ -104,16 +104,16 @@ class PBSmartImageExtensionTest extends AbstractExtensionTestCase
             'adapters' => [
                 'adapter_1' => [
                     'type' => 'cloudimage',
-                    'url' => 'https://example1.cloudimage.io',
+                    'token' => 'token-1',
                     'version' => 'v7'
                 ],
                 'adapter_2' => [
-                    'url' => 'https://example2.cloudimage.io',
+                    'token' => 'token-2',
                     'version' => 'v7'
                 ],
                 'adapter_3' => [
                     'type' => 'cloudimage',
-                    'url' => 'https://example3.cloudimage.io',
+                    'token' => 'token-3',
                     'version' => 'v7'
                 ],
             ],
@@ -138,16 +138,16 @@ class PBSmartImageExtensionTest extends AbstractExtensionTestCase
             'adapters' => [
                 'adapter_1' => [
                     'type' => 'cloudimage',
-                    'url' => 'https://example1.cloudimage.io',
+                    'token' => 'token-1',
                     'version' => 'v7'
                 ],
                 'adapter_2' => [
-                    'url' => 'https://example2.cloudimage.io',
+                    'token' => 'token-2',
                     'version' => 'v7'
                 ],
                 'adapter_3' => [
                     'type' => 'cloudimage',
-                    'url' => 'https://example3.cloudimage.io',
+                    'token' => 'token-3',
                     'version' => 'v7'
                 ],
             ],
@@ -172,7 +172,7 @@ class PBSmartImageExtensionTest extends AbstractExtensionTestCase
             'adapters' => [
                 'adapter_1' => [
                     'type' => 'cloudimage',
-                    'url' => 'https://example.cloudimage.io',
+                    'token' => 'token-1',
                     'version' => 'v7'
                 ],
                 'adapter_2' => [
@@ -180,7 +180,7 @@ class PBSmartImageExtensionTest extends AbstractExtensionTestCase
                 ],
                 'adapter_3' => [
                     'type' => 'cloudimage',
-                    'url' => 'https://example3.cloudimage.io',
+                    'token' => 'token-3',
                     'version' => 'v7'
                 ],
             ],

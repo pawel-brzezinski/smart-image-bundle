@@ -36,34 +36,34 @@ class CloudImageAdapterConfiguratorTest extends TestCase
     {
         // Dataset 1
         $config1 = [
-            'url' => 'http://token1.cloudimage.io',
+            'token' => 'token-1',
         ];
         $breadcrumb1 = null;
         $expected1 = [
-            'url' => 'http://token1.cloudimage.io',
+            'token' => 'token-1',
             'version' => 'v7',
         ];
 
         // Dataset 2
         $config2 = [
-            'url' => 'http://token2.cloudimage.io',
+            'token' => 'token-2',
             'version' => 'v6',
         ];
         $breadcrumb2 = null;
         $expected2 = [
-            'url' => 'http://token2.cloudimage.io',
+            'token' => 'token-2',
             'version' => 'v6',
         ];
 
         // Dataset 3
         $config3 = [
-            'url' => 'http://token3.cloudimage.io',
+            'token' => 'token-3',
             'version' => 'v7',
             'alias' => '_storage_',
         ];
         $breadcrumb3 = null;
         $expected3 = [
-            'url' => 'http://token3.cloudimage.io',
+            'token' => 'token-3',
             'version' => 'v7',
             'alias' => '_storage_',
         ];
@@ -97,30 +97,30 @@ class CloudImageAdapterConfiguratorTest extends TestCase
     {
         // Dataset 1
         $config1 = [];
-        $expectedMsg1 = 'url';
+        $expectedMsg1 = 'token';
 
         // Dataset 2
-        $config2 = ['url' => ''];
-        $expectedMsg2 = 'url';
+        $config2 = ['token' => ''];
+        $expectedMsg2 = 'token';
 
         // Dataset 3
         $config3 = [
-            'url' => 'http://token.cloudimage.io',
+            'token' => 'token',
             'version' => '',
         ];
         $expectedMsg3 = 'version';
 
         // Dataset 4
         $config4 = [
-            'url' => 'http://token.cloudimage.io',
+            'token' => 'token',
             'version' => 'v7',
             'alias' => '',
         ];
         $expectedMsg4 = 'alias';
 
         return [
-            'url node not defined' => [$expectedMsg1, $config1],
-            'url node is empty' => [$expectedMsg2, $config2],
+            'token node not defined' => [$expectedMsg1, $config1],
+            'token node is empty' => [$expectedMsg2, $config2],
             'version node is empty' => [$expectedMsg3, $config3],
             'alias node is empty' => [$expectedMsg4, $config4],
         ];
@@ -178,18 +178,18 @@ class CloudImageAdapterConfiguratorTest extends TestCase
     {
         // Dataset 1
         $config1 = [
-            'url' => 'https://example.cloudimage.io',
+            'token' => 'token-1',
             'version' => 'v7',
         ];
-        $expected1 = ['https://example.cloudimage.io', 'v7'];
+        $expected1 = ['token-1', 'v7'];
 
         // Dataset 2
         $config2 = [
-            'url' => 'https://example.cloudimage.io',
+            'token' => 'token-2',
             'version' => 'v7',
             'alias' => '_storage_',
         ];
-        $expected2 = ['https://example.cloudimage.io', 'v7', '_storage_'];
+        $expected2 = ['token-2', 'v7', '_storage_'];
 
         return [
             'config with required only items' => [$expected1, $config1],
