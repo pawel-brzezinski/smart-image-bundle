@@ -23,7 +23,7 @@ class AdapterRegistryTest extends TestCase
     /**
      * {@inheritDoc}
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->adapters['adapter_1'] = FakeAdapter::create();
         $this->adapters['adapter_2'] = FakeAdapter::create();
@@ -33,7 +33,7 @@ class AdapterRegistryTest extends TestCase
     /**
      * {@inheritDoc}
      */
-    protected function tearDown()
+    protected function tearDown(): void
     {
         $this->adapters = [];
     }

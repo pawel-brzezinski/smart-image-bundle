@@ -44,7 +44,7 @@ class AdapterNotExistExceptionTest extends TestCase
      *
      * @throws AdapterNotExistException
      */
-    public function testShouldThrowTagGeneratorNotExistException(string $expectedMsg, string $adapterName, array $availableAdapters)
+    public function testShouldThrowAdapterNotExistException(string $expectedMsg, string $adapterName, array $availableAdapters)
     {
         // Expect
         $this->expectException(AdapterNotExistException::class);

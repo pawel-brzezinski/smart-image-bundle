@@ -14,7 +14,7 @@ use PB\Bundle\SmartImageBundle\Adapter\Exception\AdapterNotExistException;
 final class AdapterRegistry implements AdapterRegistryInterface
 {
     /**
-     * @var string
+     * @var CloudImageAdapter
      */
     private $defaultAdapter;
 

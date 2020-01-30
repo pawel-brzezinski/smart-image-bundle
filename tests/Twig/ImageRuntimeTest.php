@@ -24,7 +24,7 @@ class ImageRuntimeTest extends TestCase
     /**
      * {@inheritDoc}
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->adapterRegMock = $this->prophesize(AdapterRegistryInterface::class);
         $this->adapterMock = $this->prophesize(AdapterInterface::class);
@@ -33,7 +33,7 @@ class ImageRuntimeTest extends TestCase
     /**
      * {@inheritDoc}
      */
-    protected function tearDown()
+    protected function tearDown(): void
     {
         $this->adapterRegMock = null;
     }

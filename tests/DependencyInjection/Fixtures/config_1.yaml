@@ -1,0 +1,11 @@
+pb_smart_image:
+    default_adapter: cloudimage-1
+    adapters:
+        cloudimage-1:
+            type: cloudimage
+            url: https://example-1.cloudimage.io
+            version: v7
+        cloudimage-2:
+            type: cloudimage
+            url: https://example-2.cloudimage.io
+            version: v7
