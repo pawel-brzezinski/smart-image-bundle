@@ -1,0 +1,8 @@
+{% set extra_allowed_attrs = extra_allowed_attrs is defined and extra_allowed_attrs is iterable ? extra_allowed_attrs : [] %}
+{% set allowed_attrs = ['ci-align', 'ci-fill', 'ci-not-lazy', 'ci-params', 'ci-sizes', 'ci-src', 'ci-ratio']|merge(extra_allowed_attrs) %}
+{% set attrs = attrs is defined and attrs is iterable ? attrs : [] %}
+
+{% include '@PBSmartImage/tag/img.html.twig' with {
+    extra_allowed_attrs: allowed_attrs,
+    attrs: attrs
+} only %}

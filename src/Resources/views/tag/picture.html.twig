@@ -1,14 +1,20 @@
-{% set source = source is defined and source is iterable ? source : null %}
+{% set sources = sources is defined and sources is iterable ? sources : null %}
 {% set img = img is defined and img is iterable ? img : null %}
 
 <picture>
-    {% if source is not null %}
-        {% for attrs in source %}
-            {% include '@PBSmartImage/tag/source.html.twig' with attrs only %}
+    {% if sources is not null %}
+        {% for source in sources %}
+            {% include '@PBSmartImage/tag/source.html.twig' with {
+                attrs: source.attrs is defined and source.attrs is iterable ? source.attrs : [],
+                extra_allowed_attrs: source.extra_allowed_attrs is defined and source.extra_allowed_attrs is iterable ? source.extra_allowed_attrs : []
+            } only %}
         {% endfor %}
     {% endif %}
 
     {% if img is not null %}
-        {% include '@PBSmartImage/tag/img.html.twig' with img only %}
+        {% include '@PBSmartImage/tag/img.html.twig' with {
+            attrs: img.attrs is defined and img.attrs is iterable ? img.attrs : [],
+            extra_allowed_attrs: img.extra_allowed_attrs is defined and img.extra_allowed_attrs is iterable ? img.extra_allowed_attrs : []
+        } only %}
     {% endif %}
 </picture>

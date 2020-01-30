@@ -1,3 +1,5 @@
-{% set attributes = ['class', 'src', 'srcset', 'alt', 'sizes'] %}
+{% set extra_allowed_attrs = extra_allowed_attrs is defined and extra_allowed_attrs is iterable ? extra_allowed_attrs : [] %}
+{% set allowed_attrs = ['class', 'src', 'srcset', 'alt', 'sizes']|merge(extra_allowed_attrs) %}
+{% set attrs = attrs is defined and attrs is iterable ? attrs : [] %}
 
-<img {{ si_attrs_string(_context, attributes)|raw }}>
+<img {{ si_attrs_string(attrs, allowed_attrs)|raw }}>

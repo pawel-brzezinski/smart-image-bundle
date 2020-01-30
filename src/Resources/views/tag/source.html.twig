@@ -1,3 +1,5 @@
-{% set attributes = ['class', 'media', 'sizes', 'src', 'srcset', 'type'] %}
+{% set extra_allowed_attrs = extra_allowed_attrs is defined and extra_allowed_attrs is iterable ? extra_allowed_attrs : [] %}
+{% set allowed_attrs = ['class', 'media', 'sizes', 'src', 'srcset', 'type'] %}
+{% set attrs = attrs is defined and attrs is iterable ? attrs : [] %}
 
-<source {{ si_attrs_string(_context, attributes)|raw }}>
+<source {{ si_attrs_string(attrs, allowed_attrs)|raw }}>
