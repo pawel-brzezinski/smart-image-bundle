@@ -178,18 +178,18 @@ class CloudImageAdapterTest extends TestCase
      * @dataProvider getUrlWithTransformationDataProvider
      *
      * @param string $expected
-     * @param string $apiUrl
+     * @param string $token
      * @param string $source
      * @param array $transformation
      */
     public function testShouldCallGetUrlWithTransformationAndReturnServiceImageUrlWithTransformationString(
         string $expected,
-        string $apiUrl,
+        string $token,
         string $source,
         array $transformation
     ) {
         // When
-        $actual = $this->createAdapter($apiUrl)->getUrlWithTransformation($source, $transformation);
+        $actual = $this->createAdapter($token)->getUrlWithTransformation($source, $transformation);
 
         // Then
         $this->assertSame($expected, $actual);

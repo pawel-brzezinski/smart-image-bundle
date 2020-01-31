@@ -10,7 +10,11 @@ use PB\Bundle\SmartImageBundle\DependencyInjection\Exception\{
     DefaultAdapterNotExistException,
     MissingAdapterTypeException
 };
-use PB\Bundle\SmartImageBundle\DependencyInjection\Configurator\Adapter\{AdapterConfiguratorInterface, CloudImageAdapterConfigurator};
+use PB\Bundle\SmartImageBundle\DependencyInjection\Configurator\Adapter\{
+    AdapterConfiguratorInterface,
+    CloudImageAdapterConfigurator,
+    StorageAdapterConfigurator
+};
 use PB\Bundle\SmartImageBundle\Adapter\AdapterRegistryInterface;
 use Symfony\Component\Config\Definition\Processor;
 use Symfony\Component\Config\FileLocator;
@@ -27,6 +31,7 @@ final class PBSmartImageExtension extends Extension
 
     private const SUPPORTED_ADAPTERS = [
         'cloudimage' => CloudImageAdapterConfigurator::class,
+        'storage' => StorageAdapterConfigurator::class,
     ];
 
     /**

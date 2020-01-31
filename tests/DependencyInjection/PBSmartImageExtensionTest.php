@@ -27,7 +27,12 @@ class PBSmartImageExtensionTest extends AbstractExtensionTestCase
             'cloudimage_1' => [
                 'type' => 'cloudimage',
                 'token' => 'token-1',
-                'version' => 'v7'
+                'version' => 'v7',
+            ],
+            'storage_1' => [
+                'type' => 'storage',
+                'url' => 'https://example-1.fra1.digitaloceanspaces.com',
+                'path_prefix' => 'images',
             ],
             'cloudimage_2' => [
                 'type' => 'cloudimage',
@@ -74,6 +79,10 @@ class PBSmartImageExtensionTest extends AbstractExtensionTestCase
         $this->assertContainerBuilderHasServiceDefinitionWithArgument('pb_smart_image.adapter.cloudimage_1', 0, 'token-1');
         $this->assertContainerBuilderHasServiceDefinitionWithArgument('pb_smart_image.adapter.cloudimage_1', 1, 'v7');
 
+        // Service for 'storage_1' adapter
+        $this->assertContainerBuilderHasServiceDefinitionWithArgument('pb_smart_image.adapter.storage_1', 0, 'https://example-1.fra1.digitaloceanspaces.com');
+        $this->assertContainerBuilderHasServiceDefinitionWithArgument('pb_smart_image.adapter.storage_1', 1, 'images');
+
         // Service for 'cloudimage_2' adapter
         $this->assertContainerBuilderHasServiceDefinitionWithArgument('pb_smart_image.adapter.cloudimage_2', 0, 'token-2');
         $this->assertContainerBuilderHasServiceDefinitionWithArgument('pb_smart_image.adapter.cloudimage_2', 1, 'v6');
@@ -82,6 +91,7 @@ class PBSmartImageExtensionTest extends AbstractExtensionTestCase
         // Adapter registry
         $adapterRefs = [
             'cloudimage_1' => new Reference('pb_smart_image.adapter.cloudimage_1'),
+            'storage_1' => new Reference('pb_smart_image.adapter.storage_1'),
             'cloudimage_2' => new Reference('pb_smart_image.adapter.cloudimage_2'),
         ];
 
@@ -165,7 +175,7 @@ class PBSmartImageExtensionTest extends AbstractExtensionTestCase
     {
         // Expect
         $this->expectException(AdapterNotSupportedException::class);
-        $this->expectExceptionMessage('Your "pb_smart_image" config "type" key "foo" is not supported. Supported types: cloudimage.');
+        $this->expectExceptionMessage('Your "pb_smart_image" config "type" key "foo" is not supported. Supported types: cloudimage, storage.');
 
         // Given
         $config = [
