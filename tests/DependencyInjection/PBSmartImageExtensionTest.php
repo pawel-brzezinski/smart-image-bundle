@@ -13,6 +13,7 @@ use PB\Bundle\SmartImageBundle\DependencyInjection\Exception\{
 };
 use PB\Bundle\SmartImageBundle\DependencyInjection\PBSmartImageExtension;
 use PB\Bundle\SmartImageBundle\Twig\{HTMLExtension, HTMLRuntime, ImageExtension, ImageRuntime};
+use Symfony\Component\Config\Definition\Exception\InvalidConfigurationException;
 use Symfony\Component\DependencyInjection\Reference;
 
 /**
@@ -177,6 +178,41 @@ class PBSmartImageExtensionTest extends AbstractExtensionTestCase
                 ],
                 'adapter_2' => [
                     'type' => 'foo',
+                ],
+                'adapter_3' => [
+                    'type' => 'cloudimage',
+                    'token' => 'token-3',
+                    'version' => 'v7'
+                ],
+            ],
+        ];
+
+        // When
+        $this->load($config)
+
+        ;
+    }
+
+    /**
+     *
+     */
+    public function testShouldThrowInvalidConfigurationExceptionWhenOneOfTheAdapterConfigurationIsNotCorrect()
+    {
+        // Expect
+        $this->expectException(InvalidConfigurationException::class);
+
+        // Given
+        $config = [
+            'default_adapter' => 'adapter_1',
+            'adapters' => [
+                'adapter_1' => [
+                    'type' => 'cloudimage',
+                    'token' => 'token-1',
+                    'version' => 'v7'
+                ],
+                'adapter_2' => [
+                    'type' => 'cloudimage',
+                    'version' => 'v7'
                 ],
                 'adapter_3' => [
                     'type' => 'cloudimage',

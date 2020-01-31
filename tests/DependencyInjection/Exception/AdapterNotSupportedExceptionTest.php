@@ -10,7 +10,7 @@ use PHPUnit\Framework\TestCase;
 /**
  * @author Paweł Brzeziński <pawel.brzezinski@smartint.pl>
  */
-class AdapterNotExistExceptionTest extends TestCase
+class AdapterNotSupportedExceptionTest extends TestCase
 {
     #############################################
     # AdapterNotSupportedException::construct() #

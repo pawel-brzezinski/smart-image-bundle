@@ -2,7 +2,7 @@
     "timeout": 10,
     "source": {
         "directories": [
-            "."
+            "./src"
         ],
         "excludes": [
             "Resources",
@@ -11,7 +11,7 @@
         ]
     },
     "logs": {
-        "text": "Tests\/infection\/infection-log.txt",
+        "text": "tests\/infection\/infection-log.txt",
         "badge": {
             "branch": "master"
         }

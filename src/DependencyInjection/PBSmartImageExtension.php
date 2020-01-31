@@ -118,7 +118,6 @@ final class PBSmartImageExtension extends Extension
     {
         $optionsNode = $node->children();
         $this->getAdapterConfigurator($type)->buildConfiguration($optionsNode);
-        $optionsNode->end();
     }
 
     /**
