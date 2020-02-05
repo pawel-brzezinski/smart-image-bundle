@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace PB\Bundle\SmartImageBundle\Tests\DependencyInjection;
 
 use Matthias\SymfonyDependencyInjectionTest\PhpUnit\AbstractExtensionTestCase;
-use PB\Bundle\SmartImageBundle\Adapter\{AdapterRegistry, AdapterRegistryInterface};
+use PB\Bundle\SmartImageBundle\Adapter\{AdapterRegistry, AdapterRegistryInterface, CloudImageAdapter, StorageAdapter};
 use PB\Bundle\SmartImageBundle\DependencyInjection\Exception\{
     AdapterNotSupportedException,
     DefaultAdapterNotExistException,
@@ -68,22 +68,29 @@ class PBSmartImageExtensionTest extends AbstractExtensionTestCase
         // Then
 
         // Twig HTML extension
-        $this->assertContainerBuilderHasServiceDefinitionWithTag(HTMLExtension::class, 'twig.extension');
-        $this->assertContainerBuilderHasServiceDefinitionWithTag(HTMLRuntime::class, 'twig.runtime');
+        $this->assertContainerBuilderHasService('pb_smart_image.html.twig_extension', HTMLExtension::class);
+        $this->assertContainerBuilderHasServiceDefinitionWithTag('pb_smart_image.html.twig_extension', 'twig.extension');
+        $this->assertContainerBuilderHasService('pb_smart_image.html.twig_runtime', HTMLRuntime::class);
+        $this->assertContainerBuilderHasServiceDefinitionWithTag('pb_smart_image.html.twig_runtime', 'twig.runtime');
 
         // Twig Image extension
-        $this->assertContainerBuilderHasServiceDefinitionWithTag(ImageExtension::class, 'twig.extension');
-        $this->assertContainerBuilderHasServiceDefinitionWithTag(ImageRuntime::class, 'twig.runtime');
+        $this->assertContainerBuilderHasService('pb_smart_image.image.twig_extension', ImageExtension::class);
+        $this->assertContainerBuilderHasServiceDefinitionWithTag('pb_smart_image.image.twig_extension', 'twig.extension');
+        $this->assertContainerBuilderHasService('pb_smart_image.image.twig_runtime', ImageRuntime::class);
+        $this->assertContainerBuilderHasServiceDefinitionWithTag('pb_smart_image.image.twig_runtime', 'twig.runtime');
 
         // Service for 'cloudimage_1' adapter
+        $this->assertContainerBuilderHasService('pb_smart_image.adapter.cloudimage_1', CloudImageAdapter::class);
         $this->assertContainerBuilderHasServiceDefinitionWithArgument('pb_smart_image.adapter.cloudimage_1', 0, 'token-1');
         $this->assertContainerBuilderHasServiceDefinitionWithArgument('pb_smart_image.adapter.cloudimage_1', 1, 'v7');
 
         // Service for 'storage_1' adapter
+        $this->assertContainerBuilderHasService('pb_smart_image.adapter.storage_1', StorageAdapter::class);
         $this->assertContainerBuilderHasServiceDefinitionWithArgument('pb_smart_image.adapter.storage_1', 0, 'https://example-1.fra1.digitaloceanspaces.com');
         $this->assertContainerBuilderHasServiceDefinitionWithArgument('pb_smart_image.adapter.storage_1', 1, 'images');
 
         // Service for 'cloudimage_2' adapter
+        $this->assertContainerBuilderHasService('pb_smart_image.adapter.cloudimage_2', CloudImageAdapter::class);
         $this->assertContainerBuilderHasServiceDefinitionWithArgument('pb_smart_image.adapter.cloudimage_2', 0, 'token-2');
         $this->assertContainerBuilderHasServiceDefinitionWithArgument('pb_smart_image.adapter.cloudimage_2', 1, 'v6');
         $this->assertContainerBuilderHasServiceDefinitionWithArgument('pb_smart_image.adapter.cloudimage_2', 2, '_storage_');
@@ -95,9 +102,10 @@ class PBSmartImageExtensionTest extends AbstractExtensionTestCase
             'cloudimage_2' => new Reference('pb_smart_image.adapter.cloudimage_2'),
         ];
 
-        $this->assertContainerBuilderHasServiceDefinitionWithArgument(AdapterRegistry::class, 0, $adapterRefs);
-        $this->assertContainerBuilderHasServiceDefinitionWithArgument(AdapterRegistry::class, 1, 'cloudimage_1');
-        $this->assertContainerBuilderHasAlias(AdapterRegistryInterface::class, AdapterRegistry::class);
+        $this->assertContainerBuilderHasService('pb_smart_image.adapter_registry', AdapterRegistry::class);
+        $this->assertContainerBuilderHasServiceDefinitionWithArgument('pb_smart_image.adapter_registry', 0, $adapterRefs);
+        $this->assertContainerBuilderHasServiceDefinitionWithArgument('pb_smart_image.adapter_registry', 1, 'cloudimage_1');
+        $this->assertContainerBuilderHasAlias(AdapterRegistryInterface::class, 'pb_smart_image.adapter_registry');
     }
 
     /**
