@@ -24,7 +24,7 @@ final class AdapterNotSupportedException extends InvalidConfigurationException
         $message = sprintf(
             'Your "pb_smart_image" config "type" key "%s" is not supported. Supported types: %s.',
             $type,
-            implode(', ', $supportedTypes),
+            implode(', ', $supportedTypes)
         );
 
         parent::__construct($message);
