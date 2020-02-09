@@ -36,7 +36,8 @@ return [
 ### Common configuration
 You'll need to configure *at least one* image adapter. The number of adapters is unlimited. For Storage adapter, such configuration will like like this:
 ```
-# config/packages/smartimage.yaml (for Symfony 5.x)
+# app/config/config.yml (for Symfony 3.4.x)
+# config/packages/smartimage.yaml (for Symfony 4.x and 5.x)
 pb_smart_image:  
     adapters:
         # the key "my_storage" is a custom string
