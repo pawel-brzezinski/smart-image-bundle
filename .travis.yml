@@ -1,19 +1,39 @@
-sudo: false
+os: linux
 
 dist: bionic
 
 language: php
 
 php:
-    - '7.2'
-    - '7.4'
+    - 7.2
+    - 7.3
+    - 7.4
 
 cache:
     directories:
         - $HOME/.composer/cache
 
+env:
+    - SYMFONY_VERSION=5.0.*
+
+matrix:
+    include:
+        - php: 7.2
+          env: SYMFONY_VERSION=3.4.*@dev
+        - php: 7.3
+          env: SYMFONY_VERSION=4.0.*@dev
+        - php: 7.4
+          env: SYMFONY_VERSION=5.0.*@dev
+        - php: 7.2
+          env: COMPOSER_FLAGS="--prefer-lowest"
+
 before_install:
-    - travis_retry composer selfupdate
+    - travis_retry composer self-update
+    - if [ "$SYMFONY_VERSION" != "" ]; then composer require "symfony/dependency-injection:${SYMFONY_VERSION}" --no-update; fi;
+    - if [ "$SYMFONY_VERSION" != "" ]; then composer require "symfony/config:${SYMFONY_VERSION}" --no-update; fi;
+    - if [ "$SYMFONY_VERSION" != "" ]; then composer require "symfony/http-kernel:${SYMFONY_VERSION}" --no-update; fi;
+
+install: composer update --prefer-source $COMPOSER_FLAGS
 
 before_script:
     - if [[ ${TRAVIS_PHP_VERSION:0:3} == "7.4" ]]; then wget https://github.com/infection/infection/releases/download/0.15.1/infection.phar; fi
