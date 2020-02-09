@@ -82,7 +82,9 @@ final class PBSmartImageExtension extends Extension
 
             // Step 2.4. Build and process the configuration typical for a given adapter type.
             $tree = new TreeBuilder('pb_smart_image/adapters/'.$key);
-            $node = $tree->getRootNode();
+            $node = method_exists($tree, 'getRootNode')
+                ? $tree->getRootNode()
+                : $tree->root('pb_smart_image/adapters/'.$key);
             $this->buildAdapterNodeConfiguration($node, $type);
 
             $processor = new Processor();

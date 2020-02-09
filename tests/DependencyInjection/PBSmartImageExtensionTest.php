@@ -6,11 +6,9 @@ namespace PB\Bundle\SmartImageBundle\Tests\DependencyInjection;
 
 use Matthias\SymfonyDependencyInjectionTest\PhpUnit\AbstractExtensionTestCase;
 use PB\Bundle\SmartImageBundle\Adapter\{AdapterRegistry, AdapterRegistryInterface, CloudImageAdapter, StorageAdapter};
-use PB\Bundle\SmartImageBundle\DependencyInjection\Exception\{
-    AdapterNotSupportedException,
+use PB\Bundle\SmartImageBundle\DependencyInjection\Exception\{AdapterNotSupportedException,
     DefaultAdapterNotExistException,
-    MissingAdapterTypeException
-};
+    MissingAdapterTypeException};
 use PB\Bundle\SmartImageBundle\DependencyInjection\PBSmartImageExtension;
 use PB\Bundle\SmartImageBundle\Twig\{HTMLExtension, HTMLRuntime, ImageExtension, ImageRuntime};
 use Symfony\Component\Config\Definition\Exception\InvalidConfigurationException;

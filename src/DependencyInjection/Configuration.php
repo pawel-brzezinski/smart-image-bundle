@@ -18,7 +18,9 @@ final class Configuration implements ConfigurationInterface
     public function getConfigTreeBuilder(): TreeBuilder
     {
         $treeBuilder = new TreeBuilder('pb_smart_image');
-        $rootNode = $treeBuilder->getRootNode();
+        $rootNode = method_exists($treeBuilder, 'getRootNode')
+            ? $treeBuilder->getRootNode()
+            : $treeBuilder->root('pb_smart_image');
 
         $rootNode
             ->children()

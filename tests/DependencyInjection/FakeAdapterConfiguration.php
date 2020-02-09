@@ -34,7 +34,9 @@ final class FakeAdapterConfiguration implements ConfigurationInterface
     public function getConfigTreeBuilder(): TreeBuilder
     {
         $treeBuilder = new TreeBuilder('testable');
-        $rootNode = $treeBuilder->getRootNode();
+        $rootNode = method_exists($treeBuilder, 'getRootNode')
+            ? $treeBuilder->getRootNode()
+            : $treeBuilder->root('testable');
 
         $node = $rootNode->children();
         $this->appendAdapterConfiguration($node);
