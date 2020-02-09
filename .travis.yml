@@ -14,7 +14,10 @@ cache:
         - $HOME/.composer/cache
 
 env:
-    - SYMFONY_VERSION=5.0.*
+    matrix:
+        - SYMFONY_VERSION=5.0.*
+    global:
+        secure: hBIxp7dxK59CXmJcA5mAI5tRItd9lAWwUGGMXU81WQlT+eSO99Qq7trsA7M5dvb8czHkG2lCfg++108AAbrRmNMGLU4WXzXOcLXhFsMKvOe/DDsvjySeewufck0E2Y9LW5BPi5K5vUFt84i4ckyBK9c8V3muzxW3tq9bmLchW7fBRSFfjHPyn7/RphLd4tIK5SFmL8ro/hWSrrA9oQFaPnNMwap0y/JrTgRXywgeqhKS7uWWtzLaUZRgtwx6+hhUxrTnVvjuY6yJgs3Y1ib94OunwPU+Rn9ZzaW1UHRTqUBNGRo6GdKa0a7iU+wz00de8+I8TMfisxO2BpAcYSlISbE4PRlsyHMM6reAgyfI8N1+RoRju3i/blh0HZE8fecqS0VMaDAXYnqbViseC7u/67l+vYhtV1L5xx3ZNpg0tb5fr05WmQOwkcgF1dc/km1tLvleSMNvPzf034vCFfZ1GqMZS3y5Bypv/mkuHvlzYzEwzfC/0YBPuX89JexUM6px+fPvCoA0lrAEWPEvDlsh7nzHZhS9uMK5HOrG/N9Ygsjn2iITBpazuDuQl0yElWVofbLKamKAw38V2wpc8KnjghIr01wFwKoMbD++mL2j0O6SmCC6mxn9otsL+bOqf0ImTFOLUkBFsdFtlnnA8V1tJnroST8tJ0UxiecD5OvQssQ=
 
 matrix:
     include:
