@@ -123,7 +123,7 @@ pb_smart_image.adapter.my_storage
 #### AdapterInterface methods
  - `getUrl(string $source)` - Gets the pure url to the image in your storage service.
  - `getTransformationString(array $transformation)` - Gets the transformation string generated from the array of transformations specific to the adapter (if adapter support transformations).
- - `getUrlWithTransformation(string $source, array $transformation)` - Gets the url to the image in your storage service with transformation paramaters (if adapter support transformations).
+ - `getUrlWithTransformation(string $source, array $transformation)` - Gets the url to the image in your storage service with transformation parameters (if adapter support transformations).
 
 ### Adapter registry service
 Instead of using single adapter service, you can use adapter registry service which contain all configured adapters. The registry service is available under key:
@@ -348,7 +348,7 @@ Basic usage:
 ```
 Where `<options>` is an object which accept such attributes:
  - `img` - Tag attributes for `<img>` tag (the options are the same as for img partial).
- - `sources` - An array of sources attributes. One array element is one `<source>` tag (the options are the same as for img partial).
+ - `sources` - An array of sources attributes. One array element is one `<source>` tag (the options are the same as for source partial).
 
 Example:
 ```
@@ -390,5 +390,6 @@ will render `<picture>` tag:
             type="image/jpg"
     >
     <source srcset="/path/to/720w/image.jpg 2x,/path/to/360w/image.jpg 1x">
+    <img src="/path/to/image.jpg" alt="Example image">
 </picture>
 ```
