@@ -7,8 +7,8 @@ Current version is not stable. Errors may occur. Some basic functionalities may 
 
 ## Requirements
 
- - PHP 7.1 or higher
- - Symfony Framework 5.0 or higher (support for version 3.4.x and 4.x in next releases)
+ - PHP 7.2 or higher
+ - Symfony Framework 3.4.x, 4.x, 5.x
 
 For more information check composer.json file.
 
@@ -17,7 +17,7 @@ Use [Composer](https://getcomposer.org/) to install the bundle. Run the followin
 > composer require pawel-brzezinski/smart-image-bundle
 
 ### Enable the bundle
-Enable the bundle in your Symfony application. For **Symfony 5.x** you have to edit `config/bundles.php` file and add `PBSmartImageBundle` to the returned array of bundles. Example:
+Enable the bundle in your Symfony application. For **Symfony 4.x** and **5.x** you have to edit `config/bundles.php` file. Example:
 
 ```
 <?php  
@@ -30,11 +30,45 @@ return [
     PB\Bundle\SmartImageBundle\PBSmartImageBundle::class => ['all' => true],
 ];
 ```
+For **Symfony 3.4.x** you have to edit `app/AppKernel.php` file. Example:
+```
+<?php
+
+use SymfonyComponentDependencyInjectionContainerBuilder;
+use SymfonyComponentHttpKernelKernel;
+use SymfonyComponentConfigLoaderLoaderInterface;
+
+class AppKernel extends Kernel
+{
+    public function registerBundles()
+    {
+        $bundles = [
+            new SymfonyBundleFrameworkBundleFrameworkBundle(),
+            new SymfonyBundleSecurityBundleSecurityBundle(),
+            new SymfonyBundleTwigBundleTwigBundle(),
+            new SymfonyBundleMonologBundleMonologBundle(),
+            new SymfonyBundleSwiftmailerBundleSwiftmailerBundle(),
+            new DoctrineBundleDoctrineBundleDoctrineBundle(),
+            new SensioBundleFrameworkExtraBundleSensioFrameworkExtraBundle(),
+            new AppBundleAppBundle(),
+
+            // Add SmartImageBundle
+            new PBBundleSmartImageBundlePBSmartImageBundle(),
+        ];
+
+        ...
+
+        return $bundles;
+    }
+
+    ...
+}
+```
 
 ## Configuration
 
 ### Common configuration
-You'll need to configure *at least one* image adapter. The number of adapters is unlimited. For Storage adapter, such configuration will like like this:
+You'll need to configure *at least one* image adapter. The number of adapters is unlimited. For Storage adapter, such configuration will look like this:
 ```
 # app/config/config.yml (for Symfony 3.4.x)
 # config/packages/smartimage.yaml (for Symfony 4.x and 5.x)
